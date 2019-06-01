@@ -1,0 +1,11 @@
+botnet/.vs/
+botnet/Installer/obj/Debug/
+botnet/Program/obj/Debug/
+botnet/Uninstaller/obj/Debug/
+botnet/Updater/obj/Debug/
+botnet/Util/obj/Debug/
+botnet/Installer/obj/Debug/
+botnet/Program/Program_TemporaryKey.pfx
+botnet/Program/Properties/
+botnet/ducky/downloadexe.bin
+botnet/packages/
