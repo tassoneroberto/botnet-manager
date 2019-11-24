@@ -1,11 +1,33 @@
 # Botnet Manager
 
 ## Introduction
+
 Malware capable of control many remote machines.
 The repository contains the source code of the malware and the control panel as a web-ui.
 
 ## Legal disclaimer
+
 Usage of the code from this repository for attacking targets without prior mutual consent is illegal. It's the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+
+## Features & Commands
+
+- [x] Get Machine IP
+- [x] Get Machine ISP
+- [x] Get Machine Location
+- [x] Block Antivirus Websites
+- [x] Time of activity
+- [x] Get Hardware Details
+- [x] Scan for files
+- [x] Upload files
+- [ ] Files Removing
+- [ ] Disks Formatting
+- [x] Keylogger
+- [x] Screen Capture
+- [ ] Webcam Capture
+- [ ] Microphone Capture
+- [x] Cryptocurrency Mining
+- [ ] Reverse Shell
+- [ ] DDoS Attack
 
 ## Screenshots
 ![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot1.png)
