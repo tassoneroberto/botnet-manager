@@ -68,6 +68,6 @@
 
 <script>
 	function redirectToMachine(machineID) {
-		window.location.href = "/controlpanel/?section=machine&machineID=" + machineID;
+		window.location.href = "/dashboard/?section=machine&machineID=" + machineID;
 	}
 </script>

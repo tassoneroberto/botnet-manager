@@ -1,6 +1,6 @@
 <?php
 if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID'] == "")) {
-	echo "<script>window.location.replace(\"/controlpanel/?section=botnet\");</script>";
+	echo "<script>window.location.replace(\"/dashboard/?section=botnet\");</script>";
 }
 ?>
 <style>
@@ -120,7 +120,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 	});
 
 	function backToMachine() {
-		window.location.href = "/controlpanel/?section=machine&machineID=<?php echo $_GET["machineID"]; ?>";
+		window.location.href = "/dashboard/?section=machine&machineID=<?php echo $_GET["machineID"]; ?>";
 	}
 
 	function saveFilesList() {
