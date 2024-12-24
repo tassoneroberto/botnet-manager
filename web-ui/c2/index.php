@@ -29,10 +29,10 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		$coordinates = json_decode($_POST["coordinates"], true);
 		$latitude    = $coordinates["lat"];
 		$longitude   = $coordinates["lon"];
-		$machineID = getValidMachineID();
+		$machineID = getValidMachineID($conn);
 		require 'connect.php';
 		$stmt        = $conn->prepare("INSERT INTO command (`machineID`,`password`,`system`,`programVersion`,`latitude`,`longitude`, `first_signal`, `last_signal`) VALUES (?,?,?,?,?,? , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
-		$stmt->bind_param("ssssdd", $machineID, hash('sha256', mysqli_real_escape_string($_POST["password"])), $_POST["system"], $_POST["programVersion"], $latitude, $longitude);
+		$stmt->bind_param("ssssdd", $machineID, hash('sha256', mysqli_real_escape_string($conn, $_POST["password"])), $_POST["system"], $_POST["programVersion"], $latitude, $longitude);
 		$stmt->execute();
 		$stmt      = $conn->prepare("INSERT INTO `specs` (`machineID`, `account`, `os`, `language`, `motherboard`, `memory`, `bios`, `cpu`, `gpu`, `audio`, `network`, `harddrives`, `cdrom`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 		$stmt->bind_param("sssssssssssss", $machineID, $_POST["account"], $_POST["os"], $_POST["language"], $_POST["motherboard"], $_POST["memory"], $_POST["bios"], $_POST["cpu"], $_POST["gpu"], $_POST["audio"], $_POST["network"], $_POST["harddrives"], $_POST["cdrom"]);
@@ -42,10 +42,9 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		mkdir("machines/$machineID/screens", 0700);
 		mkdir("machines/$machineID/files", 0700);
 		echo $machineID;
-		require 'disconnect.php';
 	}
-	if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($_POST["machineID"], $_POST["password"])) {
-		updateTimestamp($_POST["machineID"]);
+	if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($conn, $_POST["machineID"], $_POST["password"])) {
+		updateTimestamp($conn, $_POST["machineID"]);
 		// Update machine data
 		if ($_POST["operation"] == "updateHardwareData") {
 			require 'connect.php';
@@ -55,7 +54,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt = $conn->prepare("UPDATE command SET inspectHardware=0 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
-			require 'disconnect.php';
 		}
 		// Uninstalled
 		elseif ($_POST["operation"] == "uninstalled") {
@@ -67,7 +65,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			deleteDir("machines/" . $_POST["machineID"], 0700);
-			require 'disconnect.php';
 		}
 		// Update Status Info
 		elseif ($_POST["operation"] == "updateStatusInfo") {
@@ -75,7 +72,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt = $conn->prepare("UPDATE command SET programVersion=?, lat=?, lon=?, last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
 			$stmt->bind_param("sdds", $_POST["programVersion"], $_POST["lat"], $_POST["lon"], $_POST["machineID"]);
 			$stmt->execute();
-			require 'disconnect.php';
 		}
 		// Get Orders
 		elseif ($_POST["operation"] == "getOrders") {
@@ -96,7 +92,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 				$orders->uninstall             = $row["uninstall"];
 				echo json_encode($orders);
 			}
-			require 'disconnect.php';
 		}
 		// Get interesting files
 		elseif ($_POST["operation"] == "getInterestingFiles") {
@@ -108,7 +103,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			while ($row = $result->fetch_assoc()) {
 				echo $row["interestingFiles"];
 			}
-			require 'disconnect.php';
 		}
 		// Notify files upload completed
 		elseif ($_POST["operation"] == "notifyFilesUploadCompleted") {
@@ -119,7 +113,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt = $conn->prepare("UPDATE command SET interestingFiles='' WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
-			require 'disconnect.php';
 		}
 		// Upload index file
 		elseif ($_POST["operation"] == "uploadIndexFile" && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
@@ -131,7 +124,6 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt = $conn->prepare("UPDATE command SET inspectFiles=0 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
-			require 'disconnect.php';
 			$temp_location = $_FILES["file"]["tmp_name"];
 			$new_location = "/machines/" . $_POST['machineID'] . "/" . $_FILES["file"]["name"];
 			move_uploaded_file($temp_location, $new_location);
