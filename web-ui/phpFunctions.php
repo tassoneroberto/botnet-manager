@@ -1,8 +1,9 @@
 <?php
+
 function updateTimestamp($machineID)
 {
 	require('connect.php');
-	$stmt = $conn->prepare("UPDATE botnet SET last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
+	$stmt = $conn->prepare("UPDATE command SET last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
 	$stmt->bind_param("s", $machineID);
 	$stmt->execute();
 	require('disconnect.php');
@@ -37,7 +38,7 @@ function recursiveMakeDir($currentDir, $path)
 function checkPassword($machineID, $password)
 {
 	require('connect.php');
-	$stmt = $conn->prepare("SELECT * FROM botnet WHERE machineID=? AND password=?");
+	$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=? AND password=?");
 	$stmt->bind_param("ss", $machineID, hash("sha256", mysqli_real_escape_string($password)));
 	$stmt->execute();
 	$stmt->store_result();
@@ -56,7 +57,7 @@ function getValidMachineID()
 	$found = false;
 	while (!$found) {
 		$machineID = randomAlphaNumericString(64);
-		$stmt = $conn->prepare("SELECT * FROM botnet WHERE machineID=?");
+		$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=?");
 		$stmt->bind_param("s", $machineID);
 		$stmt->execute();
 		$stmt->store_result();

@@ -1,12 +1,18 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+
+
 session_start();
-require_once("../autoload.php");
+require_once "../autoload.php";
 include "../connect.php";
-header('Content-Type: text/html; charset=utf-8');
-if (!isset($_GET['section']))
+
+if (!isset($_GET['section'])) {
   $section = "home";
-else
+} else {
   $section = htmlentities($_GET['section']);
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,34 +42,11 @@ else
   <meta name="msapplication-TileColor" content="#3372DF">
 
   <link rel="shortcut icon" href="images/favicon.png">
-
-  <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-  <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
   <script type="text/javascript" src="libs/jquery.js"></script>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
-
-    .mdl-layout__container {
-      height: auto;
-    }
-  </style>
-
-
+  <link rel="stylesheet" href="style/styles.css">
   <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
@@ -73,8 +56,6 @@ else
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" content="images/favicon/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
-
-
 </head>
 
 <body>

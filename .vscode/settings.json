@@ -17,6 +17,7 @@
         "Newtonsoft",
         "nics",
         "opencl",
+        "phar",
         "phpdotenv",
         "precomposed",
         "vlucas",

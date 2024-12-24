@@ -31,7 +31,7 @@
 			</thead>
 			<tbody>
 				<?php
-				$sql = "SELECT * FROM botnet ORDER BY last_signal DESC";
+				$sql = "SELECT * FROM command ORDER BY last_signal DESC";
 				$result = mysqli_query($conn, $sql);
 				while ($row = $result->fetch_assoc()) {
 					if ($row['system'] == "WINDOWS")

