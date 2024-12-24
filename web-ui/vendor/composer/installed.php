@@ -3,7 +3,7 @@
         'name' => 'botnet/web-ui',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '398c5f47a5af33a7fe5b16d54871013f8846c82a',
+        'reference' => '3780fbb14531fc7878f24be99330542c69d79d13',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'botnet/web-ui' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '398c5f47a5af33a7fe5b16d54871013f8846c82a',
+            'reference' => '3780fbb14531fc7878f24be99330542c69d79d13',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

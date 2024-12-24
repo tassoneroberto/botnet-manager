@@ -39,18 +39,8 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 				$sql = "SELECT * FROM command WHERE machineID='" . $_GET['machineID'] . "'";
 				$result = mysqli_query($conn, $sql);
 				while ($row = $result->fetch_assoc()) {
-					if ($row['system'] == OS_WINDOWS)
-						$systemIcon = "windows";
-					else if ($row['system'] == OS_MACOS)
-						$systemIcon = "apple";
-					else if ($row['system'] == OS_LINUX)
-						$systemIcon = "linux";
-					else if ($row['system'] == OS_ANDROID)
-						$systemIcon = "android";
-					else if ($row['system'] == OS_IOS)
-						$systemIcon = "mobile";
 					echo '<tr id="' . $row['machineID'] . '">
-						<td><i class="fab fa-' . $systemIcon . ' fa-2x"></i></td>
+						<td><i class="fab fa-' . getFontAwesomeIconNameByOS($row['system']) . ' fa-2x"></i></td>
 						<td>' . $row['programVersion'] . '</td>
 						<td><a href="https://www.google.it/maps/@' . $row['latitude'] . ',' . $row['longitude'] . ',19z" target="_blank">Lat: ' . $row['latitude'] . '<br />Lon: ' . $row['longitude'] . '</a></td>
 						<td>First: ' . $row['first_signal'] . '<br/>Last: ' . $row['last_signal'] . '</td>
