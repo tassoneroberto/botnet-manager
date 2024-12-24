@@ -24,19 +24,19 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-windows"></i>
 				<span class="mdl-list__item-primary-content">
-					Windows systems: <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'WINDOWS'")->fetch_column(); ?>
+					Windows systems: <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = '" . OS_WINDOWS . "'")->fetch_column(); ?>
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-linux"></i>
 				<span class="mdl-list__item-primary-content">
-					Linux systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'LINUX'")->fetch_column(); ?>
+					Linux systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = '" . OS_LINUX . "'")->fetch_column(); ?>
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-apple"></i>
 				<span class="mdl-list__item-primary-content">
-					macOs systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'MACOS'")->fetch_column(); ?>
+					macOs systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = '" . OS_MACOS . "'")->fetch_column(); ?>
 				</span>
 			</li>
 		</ul>
@@ -45,13 +45,13 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-android"></i>
 				<span class="mdl-list__item-primary-content">
-					Android systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'ANDROID'")->fetch_column(); ?>
+					Android systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = '" . OS_ANDROID . "'")->fetch_column(); ?>
 				</span>
 			</li>
 			<li class="mdl-list__item">
 				<i class="fas fa-mobile"></i>
 				<span class="mdl-list__item-primary-content">
-					iOS systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = 'IOS'")->fetch_column(); ?>
+					iOS systems (*): <?php echo mysqli_query($conn, "SELECT COUNT(*) FROM command WHERE `system` = '" . OS_IOS . "'")->fetch_column(); ?>
 				</span>
 			</li>
 		</ul>

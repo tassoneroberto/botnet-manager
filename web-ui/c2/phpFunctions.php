@@ -2,11 +2,11 @@
 
 function updateTimestamp($machineID)
 {
-	require('connect.php');
+	require '../connect.php';
 	$stmt = $conn->prepare("UPDATE command SET last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
 	$stmt->bind_param("s", $machineID);
 	$stmt->execute();
-	require('disconnect.php');
+	require '../disconnect.php';
 }
 
 function deleteDir($src)
@@ -37,13 +37,13 @@ function recursiveMakeDir($currentDir, $path)
 
 function checkPassword($machineID, $password)
 {
-	require('connect.php');
+	require('../connect.php');
 	$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=? AND password=?");
 	$stmt->bind_param("ss", $machineID, hash("sha256", mysqli_real_escape_string($password)));
 	$stmt->execute();
 	$stmt->store_result();
 	$num_row = $stmt->num_rows;
-	require('disconnect.php');
+	require '../disconnect.php';
 	if ($num_row === 1) {
 		return true;
 	} else {
@@ -53,7 +53,7 @@ function checkPassword($machineID, $password)
 
 function getValidMachineID()
 {
-	require('connect.php');
+	require('../connect.php');
 	$found = false;
 	while (!$found) {
 		$machineID = randomAlphaNumericString(64);
@@ -66,7 +66,7 @@ function getValidMachineID()
 			$found = true;
 		}
 	}
-	require('disconnect.php');
+	require '../disconnect.php';
 	return $machineID;
 }
 

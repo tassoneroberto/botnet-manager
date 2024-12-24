@@ -25,5 +25,5 @@ if (isset($_POST["operation"])) {
 		$result = mysqli_query($conn, $sql);
 		deleteDir("../machines/" . $_POST['id'], 0700);
 	}
-	require('disconnect.php');
+	require 'disconnect.php';
 }
