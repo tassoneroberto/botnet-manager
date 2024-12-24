@@ -77,11 +77,11 @@ function checkKey($key)
 
 function randomAlphaNumericString($length)
 {
-	$keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$keySpace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$pieces = [];
-	$max = mb_strlen($keyspace, '8bit') - 1;
+	$max = mb_strlen($keySpace, '8bit') - 1;
 	for ($i = 0; $i < $length; ++$i) {
-		$pieces[] = $keyspace[random_int(0, $max)];
+		$pieces[] = $keySpace[random_int(0, $max)];
 	}
 	return implode('', $pieces);
 }

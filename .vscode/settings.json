@@ -1,3 +1,27 @@
 {
-    "dotnet.preferCSharpExtension": true
+    "dotnet.preferCSharpExtension": true,
+    "cSpell.words": [
+        "Argb",
+        "autoload",
+        "CDROM",
+        "cuda",
+        "Delimon",
+        "DOWNARROW",
+        "elfinder",
+        "ethermine",
+        "Ethminer",
+        "geforce",
+        "harddrives",
+        "homescreen",
+        "intelutilities",
+        "Newtonsoft",
+        "nics",
+        "opencl",
+        "phpdotenv",
+        "precomposed",
+        "vlucas",
+        "Webclient",
+        "windowstyle",
+        "xhttp"
+    ]
 }

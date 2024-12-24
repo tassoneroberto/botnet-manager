@@ -30,28 +30,32 @@ Usage of the code from this repository for attacking targets without prior mutua
 - [ ] DDoS Attack
 
 ## Screenshots
-![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot1.png)
-![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot2.png)
-![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot3.png)
-![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot4.png)
-![](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot5.png)
+
+![Screenshot 1](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot1.png)
+![Screenshot 2](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot2.png)
+![Screenshot 3](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot3.png)
+![Screenshot 4](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot4.png)
+![Screenshot 5](https://raw.githubusercontent.com/tassoneroberto/botnet-manager/master/screenshots/screenshot5.png)
 
 ## Installation
+
 Clone
-```
+
+```bash
 git clone https://github.com/tassoneroberto/botnet-manager.git
 ```
 
 ### Web UI
+
 Upload the web-ui to a webserver (PHP and MySQL are required).
 
-Create a MySQL schema and change the fields in ```connect.php``` file. Also, change the fields ```$validUrl``` in ```index.php``` with the web-ui address (used to communicate to the malware that the web-ui address changed).
+Create a MySQL database and create a file `.env.local` with the database configuration. Also, change the fields `$validUrl` in `index.php` with the web-ui address (used to communicate to the malware that the web-ui address changed).
 
-Initialize the database running the ```db-init.sql``` SQL script.
+Initialize the database tables by importing the file `db-init.sql`.
 
 ### Malware
 
-Open the project in Visual Studio and change the ```BASE_URL``` variable with the web-ui address.
+Open the project in Visual Studio and change the `BASE_URL` variable with the web-ui address.
 
 Build the entire project.
 
@@ -59,4 +63,4 @@ Upload the output .exe files located in botnet/EXE to remote host (inside the so
 
 ### Usage
 
-Run the ```Installer.exe``` file and open the web-ui to check if the system is installed correctly.
+Run the `Installer.exe` file and open the web-ui to check if the system is installed correctly.
