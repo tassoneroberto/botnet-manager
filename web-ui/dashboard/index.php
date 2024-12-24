@@ -2,8 +2,7 @@
 session_start();
 require_once '../autoload.php';
 include '../connect.php';
-
-require_once "./autoload.php";
+require_once './autoload.php';
 
 if (!isset($_GET['section'])) {
   $section = "home";
