@@ -1,3 +1,7 @@
 Debug/
 .env.local
 web-ui/machines/
+CopilotIndices/
+copilot-chat/
+EXE/
+.vs/
