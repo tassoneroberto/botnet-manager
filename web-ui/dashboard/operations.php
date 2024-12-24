@@ -1,6 +1,8 @@
 <?php
+session_start();
+require_once '../autoload.php';
 include '../connect.php';
-include '../phpFunction.php';
+
 if (isset($_POST["operation"])) {
 	if ($_POST["operation"] == "updateOrder") {
 		$sql    = "UPDATE command SET " . $_POST['type'] . "=" . $_POST['set'] . " WHERE machineID='" . $_POST['id'] . "'";
