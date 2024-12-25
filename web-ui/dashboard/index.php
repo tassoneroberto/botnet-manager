@@ -21,7 +21,9 @@ if (!isset($_GET['section'])) {
   <title>Control Panel</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link href="./libs/fontawesome/css/fontawesome.css" rel="stylesheet" />
+  <link href="./libs/fontawesome/css/brands.css" rel="stylesheet" />
+  <link href="./libs/fontawesome/css/solid.css" rel="stylesheet" />
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
