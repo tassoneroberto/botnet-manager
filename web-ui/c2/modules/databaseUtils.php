@@ -26,7 +26,7 @@ function getValidMachineID(mysqli $conn): string
 	$found = false;
 	while (!$found) {
 		$machineID = randomAlphaNumericString(64);
-		$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=?");
+		$stmt = $conn->prepare("SELECT id FROM command WHERE machineID=?");
 		$stmt->bind_param("s", $machineID);
 		$stmt->execute();
 		$stmt->store_result();

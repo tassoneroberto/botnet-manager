@@ -44,8 +44,9 @@
 					if ($row['note'] == "") echo "-";
 					echo $row['note'] . '</td>
 						<td>';
-					if ((time() - $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i class="far fa-check-circle fa-2x"></i>';
-					else echo '<i class="far fa-times-circle fa-2x"></i>';
+					if ($row['uninstalled']) echo '<i title="Uninstalled" class="fa fa-ban fa-2x"></i>';
+					elseif ((time() - $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i title="Online" class="fa fa-circle-check fa-2x"></i>';
+					else echo '<i title="Offline" class="fa fa-times-circle fa-2x"></i>';
 					echo '</td>
 					  </tr>';
 				}

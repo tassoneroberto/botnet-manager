@@ -54,8 +54,8 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 						</td>
 						<td>';
 					if ($row['uninstalled']) echo '<i title="Uninstalled" class="fa fa-ban fa-2x"></i>';
-					elseif ((time() - $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i title="Offline" class="fa fa-circle-check fa-2x"></i>';
-					else echo '<i title="Online" class="fa fa-circle-check fa-2x"></i>';
+					elseif ((time() - (int) $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i title="Online" class="fa fa-circle-check fa-2x"></i>';
+					else echo '<i title="Offline" class="fa fa-times-circle fa-2x"></i>';
 					echo '</td>
 						</tr>
 						<tr>

