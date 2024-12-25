@@ -1,6 +1,6 @@
 <?php
 
-function deleteDir($src)
+function deleteDir(string $src): void
 {
 	$dir = opendir($src);
 	while (false !== ($file = readdir($dir))) {
@@ -17,7 +17,7 @@ function deleteDir($src)
 	rmdir($src);
 }
 
-function recursiveMakeDir($currentDir, $path)
+function recursiveMakeDir(string $currentDir, string $path): void
 {
 	foreach (explode("/", $path) as $folder) {
 		$currentDir = $currentDir . $folder . "/";

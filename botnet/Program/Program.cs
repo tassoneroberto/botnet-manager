@@ -36,7 +36,7 @@ namespace Botnet
         static bool minerRunning = false;
         static string filesIndex;
 
-        static void Main(string[] args)
+        static void Main()
         {
             Utility.DeleteUninstaller();
             Console.WriteLine("Intel Utilities v" + Utility.GetProgramCurrentVersion());

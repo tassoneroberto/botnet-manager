@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `command` (
   `uninstall` tinyint(1) NOT NULL DEFAULT '0',
   `first_signal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_signal` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `uninstalled` tinyint(1) NOT NULL DEFAULT '0',
   `note` text,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb3;

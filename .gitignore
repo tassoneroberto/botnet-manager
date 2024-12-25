@@ -1,7 +1,13 @@
-Debug/
+# General
 .env.local
-web-ui/machines/
 CopilotIndices/
 copilot-chat/
 EXE/
+
+# C-Sharp
+Debug/
 .vs/
+
+# Web
+web-ui/machines/
+web-ui/software/

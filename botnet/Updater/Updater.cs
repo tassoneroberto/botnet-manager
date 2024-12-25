@@ -4,7 +4,7 @@ namespace Botnet
 {
     class Updater
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Utility.WaitForInternet();
             if (Utility.GetProgramCurrentVersion() < Utility.GetProgramLatestVersion())

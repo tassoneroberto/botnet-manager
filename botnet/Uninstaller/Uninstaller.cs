@@ -1,12 +1,11 @@
-﻿using System.Threading;
+﻿using System;
 
 namespace Botnet
 {
     class Uninstaller
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Thread.Sleep(10000);
             Utility.Uninstall();
         }
     }
