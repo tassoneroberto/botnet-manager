@@ -53,8 +53,9 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 						
 						</td>
 						<td>';
-					if ((time() - $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i class="far fa-check-circle fa-2x"></i>';
-					else echo '<i class="far fa-times-circle fa-2x"></i>';
+					if ($row['uninstalled']) echo '<i title="Uninstalled" class="fa fa-ban fa-2x"></i>';
+					elseif ((time() - $row['ordersInterval']) < strtotime($row['last_signal'])) echo '<i title="Offline" class="fa fa-circle-check fa-2x"></i>';
+					else echo '<i title="Online" class="fa fa-circle-check fa-2x"></i>';
 					echo '</td>
 						</tr>
 						<tr>
@@ -158,7 +159,8 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="uninstall-' . $row['machineID'] . '">
   					<input onchange="updateOrder(this)" type="checkbox" id="uninstall-' . $row['machineID'] . '" class="mdl-switch__input" ';
-		if ($row['uninstall']) echo 'checked';
+		if ($row['uninstall']) echo 'checked ';
+		if ($row['uninstalled']) echo 'disabled ';
 		echo '>
 				</label>
 		    </td>
