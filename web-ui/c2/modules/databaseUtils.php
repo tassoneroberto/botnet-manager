@@ -10,7 +10,8 @@ function updateTimestamp(mysqli $conn, string $machineID): void
 function checkPassword(mysqli $conn, string $machineID, string $password): bool
 {
 	$stmt = $conn->prepare("SELECT * FROM command WHERE machineID=? AND password=?");
-	$stmt->bind_param("ss", $machineID, hash("sha256", mysqli_real_escape_string($conn, $password)));
+	$passwordHash = hash("sha256", mysqli_real_escape_string($conn, $password));
+	$stmt->bind_param("ss", $machineID, $passwordHash);
 	$stmt->execute();
 	$stmt->store_result();
 	$num_row = $stmt->num_rows;

