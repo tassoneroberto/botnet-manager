@@ -47,6 +47,16 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 	</div>
 	<div id="filesTab" class="files demo-card-wide mdl-card mdl-shadow--2dp">
 		<h4>Files to retrieve</h4>
+		<div>
+			<h3>Selected files:</h3>
+			<?php
+			$sql = "SELECT interestingFiles FROM command WHERE machineID='" . $_GET["machineID"] . "'";
+			$result = mysqli_query($conn, $sql);
+			while ($row = $result->fetch_assoc()) {
+				echo '<textarea style="width: 100%; height: 100px; resize: none;" disabled>' . $row['interestingFiles'] . '</textarea>';
+			}
+			?>
+		</div>
 		<div style="text-align: center;">
 			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="saveFilesList()" style="width: 100px;"><i style="margin-left: auto; margin-right: auto;" class="fas fa-save"></i></button>
 		</div>
