@@ -1,10 +1,11 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Web.Security;
@@ -81,7 +82,6 @@ namespace Botnet
         // SECURITY
         private static readonly int PASSWORD_LENGTH = 64;
 
-
         public static bool IsInternetAvailable()
         {
             Console.WriteLine("Checking for internet connection...");
@@ -111,6 +111,12 @@ namespace Botnet
                 Console.WriteLine("No connection detected. Sleeping for " + noInternetWait + " seconds...");
                 Thread.Sleep(noInternetWait);
             }
+        }
+
+        public static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
+                      .IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         public static string RandomAlphanumeric()

