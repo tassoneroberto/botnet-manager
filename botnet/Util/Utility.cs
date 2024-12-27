@@ -155,6 +155,7 @@ namespace Botnet
         public static void DownloadFile(string url, string path)
         {
             Console.WriteLine("Downloading file at URI [" + url + "] and saving at [" + path + "]");
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
             url = Uri.EscapeUriString(url);
             bool done = false;
             while (!done)
