@@ -73,7 +73,7 @@ if (isset($_POST["machineID"]) && isset($_POST["password"]) && checkPassword($co
 	}
 	// Update Status Info
 	elseif ($_POST["operation"] == "updateStatusInfo") {
-		$stmt = $conn->prepare("UPDATE command SET programVersion=?, lat=?, lon=?, last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
+		$stmt = $conn->prepare("UPDATE command SET programVersion=?, latitude=?, longitude=?, last_signal=CURRENT_TIMESTAMP WHERE machineID=?");
 		$stmt->bind_param("sdds", $_POST["programVersion"], $_POST["lat"], $_POST["lon"], $_POST["machineID"]);
 		$stmt->execute();
 		return;

