@@ -108,31 +108,39 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			<td>
 			
 			 <div class="mdl-textfield mdl-js-textfield" style="padding:0px; width:50px;">
-				<input id="ordersIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['ordersInterval'] . '">
+				<input id="ordersIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['ordersInterval'] . '" ';
+		if ($row['uninstalled']) echo 'disabled ';
+		echo '>
 			  </div>
-			  <button onclick="updateOrdersInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">save</i></button>
+			  <button onclick="updateOrdersInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon"';
+		if ($row['uninstalled']) echo 'disabled ';
+		echo '><i class="material-icons">save</i></button>
 			
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="inspectHardware-' . $row['machineID'] . '">
 					<input onchange="updateOrder(this)" type="checkbox" id="inspectHardware-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['inspectHardware']) echo 'checked';
 		echo '>
 				</label>
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="inspectFiles-' . $row['machineID'] . '">
 					<input onchange="updateOrder(this)" type="checkbox" id="inspectFiles-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['inspectFiles']) echo 'checked';
 		echo '>
 				</label>
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="keylogger-' . $row['machineID'] . '">
 					<input onchange="updateOrder(this)" type="checkbox" id="keylogger-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['keylogger']) echo 'checked';
 		echo '>
 				</label>
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="screenCapture-' . $row['machineID'] . '">
   					<input onchange="updateOrder(this)" type="checkbox" id="screenCapture-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['screenCapture']) echo 'checked';
 		echo '>
 				</label>
@@ -140,19 +148,25 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			<td>
 			
 			  <div class="mdl-textfield mdl-js-textfield" style="padding:0px; width:50px;">
-				<input id="screenCaptureIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['screenCaptureInterval'] . '">
+				<input id="screenCaptureIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['screenCaptureInterval'] . '" ';
+		if ($row['uninstalled']) echo 'disabled ';
+		echo '>
 			  </div>
-			  <button onclick="updateScreenCaptureInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">save</i></button>
+			  <button onclick="updateScreenCaptureInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon" ';
+		if ($row['uninstalled']) echo 'disabled ';
+		echo '><i class="material-icons">save</i></button>
 				  			
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="filesCapture-' . $row['machineID'] . '">
   					<input onchange="updateOrder(this)" type="checkbox" id="filesCapture-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['filesCapture']) echo 'checked';
 		echo '>
 				</label>
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="mining-' . $row['machineID'] . '">
   					<input onchange="updateOrder(this)" type="checkbox" id="mining-' . $row['machineID'] . '" class="mdl-switch__input" ';
+		if ($row['uninstalled']) echo 'disabled ';
 		if ($row['mining']) echo 'checked';
 		echo '>
 				</label>
