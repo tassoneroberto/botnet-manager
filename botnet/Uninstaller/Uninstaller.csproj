@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1D4545CE-7956-4432-B72A-98AD222D6BD8}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Uninstaller</RootNamespace>
     <AssemblyName>Uninstaller</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
