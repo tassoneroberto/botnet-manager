@@ -10,6 +10,12 @@ repos:
       - id: name-tests-test
       - id: requirements-txt-fixer
       - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-illegal-windows-names
+      - id: check-json
+      - id: detect-private-key
+      - id: mixed-line-ending
+      - id: pretty-format-json
 
 exclude: |
   (?x)(
