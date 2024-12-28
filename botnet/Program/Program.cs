@@ -59,7 +59,7 @@ namespace Botnet
             {
                 machineID = Utility.GetMachineID();
                 password = Utility.GetPassword();
-                Console.WriteLine("MachineID=" + machineID);
+                Console.WriteLine("MachineID: " + machineID);
                 Console.Write("Updating status info...");
                 UpdateStatusInfo();
                 Console.WriteLine(" DONE");
