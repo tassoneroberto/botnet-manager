@@ -45,12 +45,10 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 						<td><a href="https://www.google.it/maps/@' . $row['latitude'] . ',' . $row['longitude'] . ',19z" target="_blank">Lat: ' . $row['latitude'] . '<br />Lon: ' . $row['longitude'] . '</a></td>
 						<td>First: ' . $row['first_signal'] . '<br/>Last: ' . $row['last_signal'] . '</td>
 						<td>
-						
 						<div class="mdl-textfield mdl-js-textfield" style="padding:0px;">
 							<input id="noteInput" class="mdl-textfield__input" type="text" value="' . $row['note'] . '">
 						  </div>
 						  <button onclick="updateNote(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">save</i></button>
-						
 						</td>
 						<td>';
 					if ($row['uninstalled']) echo '<i title="Uninstalled" class="fa fa-ban fa-2x"></i>';
@@ -60,21 +58,13 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 						</tr>
 						<tr>
 						<td colspan="6" style="text-align:center;">
-						
 						<button id="commandsBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="commands()"><i id="commandsBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-expand"></i></button>
-						
 						<button id="specsBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="specs()"><i id="specsBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-microchip"></i></button>
-						
 						<button id="filesBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="goToFileManager()"><i id="filesBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-file-upload"></i></button>
-						
 						<button id="machineManagerBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="goToMachineManager()"><i id="machineManagerBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-folder-open"></i></button>
-						
 						<!--<button id="screensBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="screens()"><i id="screensBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-images"></i></button>
-						
 						<button id="keysBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="keys()"><i id="keysBtnIcon" style="margin-left: auto; margin-right: auto;" class="fas fa-keyboard"></i></button>-->
-						
 						<button id="removeBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="removeMachine(\'' . $row['machineID'] . '\')"><i style="margin-left: auto; margin-right: auto;" class="fas fa-trash-alt"></i></button>
-						
 						</td>
 					  </tr>';
 				}
@@ -106,7 +96,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 	  <tbody>
 		 <tr>
 			<td>
-			
 			 <div class="mdl-textfield mdl-js-textfield" style="padding:0px; width:50px;">
 				<input id="ordersIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['ordersInterval'] . '" ';
 		if ($row['uninstalled']) echo 'disabled ';
@@ -115,7 +104,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			  <button onclick="updateOrdersInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon"';
 		if ($row['uninstalled']) echo 'disabled ';
 		echo '><i class="material-icons">save</i></button>
-			
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="inspectHardware-' . $row['machineID'] . '">
 					<input onchange="updateOrder(this)" type="checkbox" id="inspectHardware-' . $row['machineID'] . '" class="mdl-switch__input" ';
@@ -146,7 +134,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 				</label>
 			</td>
 			<td>
-			
 			  <div class="mdl-textfield mdl-js-textfield" style="padding:0px; width:50px;">
 				<input id="screenCaptureIntervalInput" class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" value="' . $row['screenCaptureInterval'] . '" ';
 		if ($row['uninstalled']) echo 'disabled ';
@@ -155,7 +142,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			  <button onclick="updateScreenCaptureInterval(\'' . $row['machineID'] . '\')" class="mdl-button mdl-js-button mdl-button--icon" ';
 		if ($row['uninstalled']) echo 'disabled ';
 		echo '><i class="material-icons">save</i></button>
-				  			
 			</td>
 			<td><label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="filesCapture-' . $row['machineID'] . '">
   					<input onchange="updateOrder(this)" type="checkbox" id="filesCapture-' . $row['machineID'] . '" class="mdl-switch__input" ';
@@ -182,11 +168,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 		</tbody>
 	</table></div>';
 	}
-	?>
 
-
-
-	<?php
 	$sql = "SELECT * FROM specs WHERE machineID='" . $_GET['machineID'] . "'";
 	$result = mysqli_query($conn, $sql);
 	while ($row = $result->fetch_assoc()) {
@@ -255,7 +237,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 	}
 	?>
 
-
 	<!--
 		<div id="filesTab" style="display:none;" class="files demo-card-wide mdl-card mdl-shadow--2dp">
 		<h4>Files</h4>
@@ -269,12 +250,11 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			if(!in_array($curimg, $ignore)) {
 				echo '<a href="'.$dirname.$curimg.'">'.$curimg.'</a> ';
 			}
-		} 	
+		}
 		echo '</div>';
 		*/
 		?>
 		-->
-
 
 	<div id="screensTab" style="display:none;" class="screens demo-card-wide mdl-card mdl-shadow--2dp">
 		<h4>Screens</h4>
@@ -290,7 +270,6 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 		echo '</div>';
 		?>
 
-
 		<div id="keysTab" style="display:none;" class="keys demo-card-wide mdl-card mdl-shadow--2dp">
 			<h4>Keys</h4>
 			<?php
@@ -304,11 +283,7 @@ if (!isset($_GET['machineID']) || (isset($_GET['machineID']) && $_GET['machineID
 			}
 			echo '</div>';
 			?>
-
-
-
 		</div>
-
 
 		<script>
 			function screens() {

